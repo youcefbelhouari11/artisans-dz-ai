@@ -1,13 +1,5 @@
 # ================================================================
 # chat.py — FINAL FIXED
-# FIX LIST:
-#   ✅ provider_question traité AVANT general question
-#   ✅ commune/city unifié partout
-#   ✅ save_memory reçoit best_provider
-#   ✅ last_best_provider stocké après chaque search
-#   ✅ negative flow utilise le contexte mémoire
-#   ✅ /chat/stream supporte provider follow-up
-#   ✅ streamable séparé des questions prestataire
 # ================================================================
 
 import random
