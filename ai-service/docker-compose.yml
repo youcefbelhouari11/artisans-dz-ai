@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+
+  # ── API FastAPI ──────────────────────────────────────────────
+  api:
+    build: .
+    container_name: tiaret_api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgresql://postgres:youcef11@db:5432/bdd
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    restart: unless-stopped
+    networks:
+      - tiaret_net
+
+  # ── PostgreSQL ───────────────────────────────────────────────
+  db:
+    image: postgres:16
+    container_name: tiaret_db
+    environment:
+      POSTGRES_DB: bdd
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: youcef11
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./base\ de\ donnees/bdd.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./base\ de\ donnees/data_tiaret.sql:/docker-entrypoint-initdb.d/02_data.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d bdd"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+    networks:
+      - tiaret_net
+
+volumes:
+  postgres_data:
+
+networks:
+  tiaret_net:
+    driver: bridge
