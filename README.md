@@ -383,3 +383,5 @@ Licence ISIL، Groupe 01
 Tiaret 
 ibn khaldoun.
 Tous droits réservés © 2025-2026.
+
+🔗 GitHub : https://github.com/youcefbelhouari11/artisans-dz-ai.git
